@@ -1,0 +1,10 @@
+<h2>Collections</h2>
+<ul>
+  <% @collections.each do |collection| %>
+    <li>
+      <%= link_to collection.title, collection %>
+    </li>
+  <% end %>
+</ul>
+
+<%= link_to "New Collection", new_collection_path %>

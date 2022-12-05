@@ -1,0 +1,14 @@
+<h1><%= @artwork.title %></h1>
+
+<p>Author: <%= @artwork.author %></p>
+<p>Type: <%= @artwork.typeof %></p>
+<p>Date Created: <%= @artwork.date %></p>
+
+<ul>
+  <li><%= link_to "Home", root_path %></li>
+  <li><%= link_to "Edit", edit_artwork_path(@artwork) %></li>
+  <li><%= link_to "Destroy", artwork_path(@artwork), data: {
+    turbo_method: :delete,
+    turbo_confirm: "Are you sure?"
+  } %></li>
+</ul>

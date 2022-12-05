@@ -1,0 +1,20 @@
+<h1><%= @collection.title %></h1>
+
+<p>Owner/Org: <%= @collection.owner %></p>
+<p>Style: <%= @collection.style %></p>
+<p>Location: <%= @collection.location %></p>
+<ul>
+  <% @collection.artworks.each do |artwork| %>
+    <li><%= link_to artwork.title, artwork_path(@artwork) %></li>
+  <% end %>
+</ul>
+
+
+<ul>
+  <li><%= link_to "Home", root_path %></li>
+  <li><%= link_to "Edit", edit_collection_path(@collection) %></li>
+  <li><%= link_to "Destroy", collection_path(@collection), data: {
+    turbo_method: :delete,
+    turbo_confirm: "Are you sure?"
+  } %></li>
+</ul>

@@ -1,0 +1,46 @@
+<%= form_with model: collection do |form| %>
+  <div>
+    <%= form.label :title %><br>
+    <%= form.text_field :title %>
+    <% collection.errors.full_messages_for(:title).each do |message| %>
+      <div><%= message %></div>
+    <% end %>
+  </div>
+
+  <div>
+    <%= form.label :owner %><br>
+    <%= form.text_field :owner %>
+    <% collection.errors.full_messages_for(:owner).each do |message| %>
+      <div><%= message %></div>
+    <% end %>
+  </div>
+
+  <div>
+    <%= form.label :style %><br>
+    <%= form.text_field :style %>
+    <% collection.errors.full_messages_for(:style).each do |message| %>
+      <div><%= message %></div>
+    <% end %>
+  </div>
+
+  <div>
+    <%= form.label :location %><br>
+    <%= form.text_field :location %>
+    <% collection.errors.full_messages_for(:location).each do |message| %>
+      <div><%= message %></div>
+    <% end %>
+  </div>
+
+  <div class="field">
+    <% for artwork in Artwork.all %>
+      <div>
+        <%= check_box_tag "artwork[artwork_ids][]", artwork.id, @collection.artworks.include?(artwork) %>
+        <%= artwork.title %>
+      </div>
+    <% end %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>
