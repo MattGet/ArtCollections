@@ -1,20 +1,237 @@
+<head>
+  <% @title = @collection.title %>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <style>
+      body {
+          padding: 25px;
+          background-color: white;
+          color: black;
+          font-size: 25px;
+          font-family: Verdana, sans-serif;
+      }
+      .dark-mode {
+          background-color: black;
+          color: white;
+      }
+      .light-mode {
+          background-color: white;
+          color: black;
+      }
+      img {
+          border: 1px solid #ddd;
+          border-radius: 5%;
+          padding: 5px;
+          width: 100%;
+          height: 400px;
+          vertical-align: middle;
+          opacity: 1;
+      }
+      hr.rounded {
+          border-top: 8px solid #bbb;
+          border-radius: 5px;
+      }
+      ul{
+          columns: 2;
+          -webkit-columns: 2;
+          -moz-columns: 2;
+      }
+      li {
+          -webkit-column-break-inside: avoid;
+          page-break-inside: avoid;
+          break-inside: avoid;
+      }
+      * {box-sizing: border-box}
+      .mySlides {display: none}
+      /* Slideshow container */
+      .slideshow-container {
+          max-width: 800px;
+          position: relative;
+          margin: auto;
+      }
+
+      /* Next & previous buttons */
+      .prev, .next {
+          cursor: pointer;
+          position: absolute;
+          top: 50%;
+          width: auto;
+          padding: 16px;
+          margin-top: -22px;
+          color: white;
+          font-weight: bold;
+          font-size: 18px;
+          transition: 0.6s ease;
+          border-radius: 0 3px 3px 0;
+          user-select: none;
+      }
+
+      /* Position the "next button" to the right */
+      .next {
+          right: 0;
+          border-radius: 3px 0 0 3px;
+      }
+
+      /* On hover, add a black background color with a little bit see-through */
+      .prev:hover, .next:hover {
+          background-color: rgba(0,0,0,0.8);
+      }
+
+      /* Caption text */
+      .text {
+          color: white;
+          font-weight: bold;
+          font-size: 32px;
+          padding: 8px 12px;
+          width: 100%;
+          text-align: center;
+      }
+
+      /* Number text (1/3 etc) */
+      .numbertext {
+          color: grey;
+          font-weight: bold;
+          font-size: 20px;
+          padding: 20px 20px;
+          position: absolute;
+          top: 0;
+      }
+
+      /* The dots/bullets/indicators */
+      .dot {
+          cursor: pointer;
+          height: 15px;
+          width: 15px;
+          margin: 0 2px;
+          background-color: #bbb;
+          border-radius: 50%;
+          display: inline-block;
+          transition: background-color 0.6s ease;
+      }
+
+      .active, .dot:hover {
+          background-color: green;
+      }
+
+      /* On smaller screens, decrease text size */
+      @media only screen and (max-width: 300px) {
+          .prev, .next,.text {font-size: 11px}
+      }
+      body::-webkit-scrollbar {
+          width: 10px;
+      }
+
+      body::-webkit-scrollbar-track {
+          -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+      }
+
+      body::-webkit-scrollbar-thumb {
+          background-color: darkgrey;
+          outline: 1px solid slategrey;
+      }
+  </style>
+</head>
+<body class="dark-mode">
+
+<nav class="navbar navbar-inverse navbar-fixed-top">
+  <div>
+    <ul class="nav navbar-nav navbar-left">
+      <li class="active"><%= link_to "Collections", collections_path %></li>
+      <li><%= link_to "Artworks", artworks_path %></li>
+    </ul>
+    <div>
+</nav>
+<br>
+
 <h1><%= @collection.title %></h1>
 
 <p>Owner/Org: <%= @collection.owner %></p>
 <p>Style: <%= @collection.style %></p>
 <p>Location: <%= @collection.location %></p>
+<div>
+  <%= image_tag @collection.image_url, style: 'width:auto;', alt: "No Image Provided" if @collection.image %>
+</div>
+<br>
+<hr class="rounded">
+<h1 style="text-align:center">Artworks</h1>
+<p style="text-align:center">Click the Image for more details!</p>
+<div class="slideshow-container">
+
+  <% @collection.artworks.each_with_index do | artwork, index | %>
+    <% if index == 0 %>
+    <div class="mySlides" style="display: block">
+      <div class="numbertext">  <%= index %></div>
+      <div class="center"><%= link_to image_tag(artwork.image_url), artwork_path(artwork) %></div>
+      <div class="text"><%= artwork.title %></div>
+    </div>
+    <% else %>
+      <div class="mySlides">
+        <div class="numbertext">  <%= index %></div>
+        <div class="center"><%= link_to image_tag(artwork.image_url), artwork_path(artwork) %></div>
+        <div class="text"><%= artwork.title %></div>
+      </div>
+    <% end %>
+  <% end %>
+
+  <a class="prev" onclick="plusSlides(-1)">❮</a>
+  <a class="next" onclick="plusSlides(1)">❯</a>
+
+</div>
+<br>
+
+<div style="text-align:center">
+  <% @collection.artworks.each_with_index do | artwork, index | %>
+    <span class="dot" onclick="currentSlide(<%= index+1 %>)"></span>
+  <% end %>
+</div>
+
+<br>
 <ul>
-  <% @collection.artworks.each do |artwork| %>
-    <li><%= link_to artwork.title, artwork_path(@artwork) %></li>
+  <% @collection.artworks.each do | artwork | %>
+    <li><%= link_to artwork.title, artwork %></li>
   <% end %>
 </ul>
 
-
+<hr class="rounded">
+<p>Options:</p>
 <ul>
-  <li><%= link_to "Home", root_path %></li>
   <li><%= link_to "Edit", edit_collection_path(@collection) %></li>
   <li><%= link_to "Destroy", collection_path(@collection), data: {
     turbo_method: :delete,
     turbo_confirm: "Are you sure?"
   } %></li>
 </ul>
+
+
+<script>
+    let slideIndex = 1;
+    showSlides(slideIndex);
+
+    function plusSlides(n) {
+        showSlides(slideIndex += n);
+    }
+
+    function currentSlide(n) {
+        showSlides(slideIndex = n);
+    }
+
+    function showSlides(n) {
+        let i;
+        let slides = document.getElementsByClassName("mySlides");
+        let dots = document.getElementsByClassName("dot");
+        if (n > slides.length) {slideIndex = 1}
+        if (n < 1) {slideIndex = slides.length}
+        for (i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";
+        }
+        for (i = 0; i < dots.length; i++) {
+            dots[i].className = dots[i].className.replace(" active", "");
+        }
+        slides[slideIndex-1].style.display = "block";
+        dots[slideIndex-1].className += " active";
+    }
+</script>
+</body>

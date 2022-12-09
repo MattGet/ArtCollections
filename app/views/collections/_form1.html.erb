@@ -1,46 +1,61 @@
-<%= form_with model: collection do |form| %>
-  <div>
-    <%= form.label :title %><br>
-    <%= form.text_field :title %>
-    <% collection.errors.full_messages_for(:title).each do |message| %>
-      <div><%= message %></div>
-    <% end %>
-  </div>
 
-  <div>
-    <%= form.label :owner %><br>
-    <%= form.text_field :owner %>
-    <% collection.errors.full_messages_for(:owner).each do |message| %>
-      <div><%= message %></div>
-    <% end %>
-  </div>
+<div class="form-style-8">
+  <%= form_with model: collection do |form| %>
+    <div>
+      <%= form.label :title %><br>
+      <%= form.text_field :title %>
+      <% collection.errors.full_messages_for(:title).each do |message| %>
+        <div><%= message %></div>
+      <% end %>
+    </div>
 
-  <div>
-    <%= form.label :style %><br>
-    <%= form.text_field :style %>
-    <% collection.errors.full_messages_for(:style).each do |message| %>
-      <div><%= message %></div>
-    <% end %>
-  </div>
+    <div>
+      <%= form.label :owner %><br>
+      <%= form.text_field :owner %>
+      <% collection.errors.full_messages_for(:owner).each do |message| %>
+        <div><%= message %></div>
+      <% end %>
+    </div>
 
-  <div>
-    <%= form.label :location %><br>
-    <%= form.text_field :location %>
-    <% collection.errors.full_messages_for(:location).each do |message| %>
-      <div><%= message %></div>
-    <% end %>
-  </div>
+    <div>
+      <%= form.label :style %><br>
+      <%= form.text_field :style %>
+      <% collection.errors.full_messages_for(:style).each do |message| %>
+        <div><%= message %></div>
+      <% end %>
+    </div>
 
-  <div class="field">
-    <% for artwork in Artwork.all %>
-      <div>
-        <%= check_box_tag "artwork[artwork_ids][]", artwork.id, @collection.artworks.include?(artwork) %>
-        <%= artwork.title %>
-      </div>
-    <% end %>
-  </div>
+    <div>
+      <%= form.label :location %><br>
+      <%= form.text_field :location %>
+      <% collection.errors.full_messages_for(:location).each do |message| %>
+        <div><%= message %></div>
+      <% end %>
+    </div>
 
-  <div>
-    <%= form.submit %>
-  </div>
-<% end %>
+    <div class="field">
+      <%= form.label :Artworks %><br>
+      <%= form.collection_check_boxes :artwork_ids, Artwork.all, :id, :title do |cb| %>
+        <% cb.label(class: "checkbox-inline input_checkbox") {cb.check_box(class: "checkbox") + cb.text } %>
+      <% end %>
+    </div>
+
+    <div>
+      <%= form.label :image %>
+      <br>
+      <%= image_tag collection.image_url, alt: "No Image Provided" if collection.image %>
+      <br><br>
+      <%= image_tag form.object.image_url if form.object.cached_image_data %>
+      <%= form.hidden_field :image, value: form.object.cached_image_data %>
+      <%= form.file_field :image %>
+      <% collection.errors.full_messages_for(:image).each do |message| %>
+        <div><%= message %></div>
+      <% end %>
+    </div>
+
+    <br>
+    <div>
+      <%= form.submit %>
+    </div>
+  <% end %>
+</div>

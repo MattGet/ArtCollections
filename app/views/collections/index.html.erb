@@ -1,10 +1,119 @@
-<h2>Collections</h2>
-<ul>
-  <% @collections.each do |collection| %>
-    <li>
-      <%= link_to collection.title, collection %>
-    </li>
-  <% end %>
-</ul>
+<head>
+  <% @title = "Collections" %>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <style>
+      body {
+          padding: 25px;
+          background-color: white;
+          color: black;
+          font-size: 25px;
+      }
+      .dark-mode {
+          background-color: black;
+          color: white;
+      }
+      .light-mode {
+          background-color: white;
+          color: black;
+      }
+      img {
+          border: 1px solid #ddd;
+          border-radius: 5%;
+          padding: 5px;
+          width: 50px;
+          height: 50px;
+      }
+      @import url("https://fonts.googleapis.com/css?family=Roboto:400,400i,700");
+      body{
+          overflow: hidden;
+          font-family: Roboto, sans-serif;
+      }
 
-<%= link_to "New Collection", new_collection_path %>
+      h1, p{
+          padding: 10px;
+      }
+
+      .video-container{
+          width: 100vw;
+          height: 100vh;
+      }
+
+      iframe {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          width: 100vw;
+          height: 100vh;
+          transform: translate(-50%, -50%);
+      }
+
+      #text{
+          background: rgba(0,0,0,0.33);
+          position: absolute;
+          color: #FFFFFF;
+          left: 50%;
+          top: 50%;
+          transform: translate(-50%, -50%);
+          white-space: nowrap;
+          padding: 10px;
+          border-radius: 25px;
+      }
+
+      @media (min-aspect-ratio: 16/9) {
+          .video-container iframe {
+              height: 56.25vw;
+          }
+      }
+      @media (max-aspect-ratio: 16/9) {
+          .video-container iframe {
+              width: 177.78vh;
+          }
+      }
+      ul{
+          columns: 2;
+          -webkit-columns: 2;
+          -moz-columns: 2;
+      }
+      li {
+          -webkit-column-break-inside: avoid;
+          page-break-inside: avoid;
+          break-inside: avoid;
+      }
+      a{
+          color: white;
+          background-color: transparent;
+          text-decoration: none;
+      }
+  </style>
+</head>
+<body class="dark-mode">
+<nav class="navbar navbar-inverse navbar-fixed-top">
+  <div>
+    <ol class="nav navbar-nav navbar-left">
+      <li class="active"><%= link_to "Collections", collections_path %></li>
+      <li><%= link_to "Artworks", artworks_path %></li>
+    </ol>
+    <div>
+</nav>
+<br><br>
+<div class="video-container">
+  <iframe src="https://www.youtube.com/embed/SYA_0oLWmh0?start=12&playlist=SYA_0oLWmh0&mute=1&controls=0&autoplay=1&playsinline=1&loop=1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="pointer-events: none;"></iframe>
+</div>
+<div id="text">
+  <h1>Collections</h1>
+  <ul>
+    <% @collections.each do |collection| %>
+      <li>
+        <%= link_to image_tag(collection.image_url), collection %>
+        <%= link_to collection.title, collection %>
+      </li>
+    <% end %>
+  </ul>
+  <p><%= link_to "Add New Collection", new_collection_path %></p>
+</div>
+
+</body>

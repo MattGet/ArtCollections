@@ -1,37 +1,52 @@
-<%= form_with model: artwork do |form| %>
-  <div>
-    <%= form.label :title %><br>
-    <%= form.text_field :title %>
-    <% artwork.errors.full_messages_for(:title).each do |message| %>
-      <div><%= message %></div>
-    <% end %>
-  </div>
+<div class="form-style-8">
+  <%= form_with model: artwork do |form| %>
+    <div>
+      <%= form.label :title %><br>
+      <%= form.text_field :title %>
+      <% artwork.errors.full_messages_for(:title).each do |message| %>
+        <div><%= message %></div>
+      <% end %>
+    </div>
 
-  <div>
-    <%= form.label :author %><br>
-    <%= form.text_field :author %>
-    <% artwork.errors.full_messages_for(:author).each do |message| %>
-      <div><%= message %></div>
-    <% end %>
-  </div>
+    <div>
+      <%= form.label :author %><br>
+      <%= form.text_field :author %>
+      <% artwork.errors.full_messages_for(:author).each do |message| %>
+        <div><%= message %></div>
+      <% end %>
+    </div>
 
-  <div>
-    <%= form.label :typeof %><br>
-    <%= form.text_field :typeof %>
-    <% artwork.errors.full_messages_for(:typeof).each do |message| %>
-      <div><%= message %></div>
-    <% end %>
-  </div>
+    <div>
+      <%= form.label :typeof %><br>
+      <%= form.text_field :typeof %>
+      <% artwork.errors.full_messages_for(:typeof).each do |message| %>
+        <div><%= message %></div>
+      <% end %>
+    </div>
 
-  <div>
-    <%= form.label :date %><br>
-    <%= form.text_field :date %>
-    <% artwork.errors.full_messages_for(:date).each do |message| %>
-      <div><%= message %></div>
-    <% end %>
-  </div>
+    <div>
+      <%= form.label :date %><br>
+      <%= form.text_field :date %>
+      <% artwork.errors.full_messages_for(:date).each do |message| %>
+        <div><%= message %></div>
+      <% end %>
+    </div>
 
-  <div>
-    <%= form.submit %>
-  </div>
-<% end %>
+    <div>
+      <%= form.label :image %>
+      <br>
+      <%= image_tag artwork.image_url, alt: "No Image Provided" if artwork.image %>
+      <br><br>
+      <%= image_tag form.object.image_url if form.object.cached_image_data %>
+      <%= form.hidden_field :image, value: form.object.cached_image_data %>
+      <%= form.file_field :image %>
+      <% artwork.errors.full_messages_for(:image).each do |message| %>
+        <div><%= message %></div>
+      <% end %>
+    </div>
+    <br>
+    <div>
+      <%= form.submit %>
+    </div>
+  <% end %>
+</div>

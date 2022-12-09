@@ -1,12 +1,130 @@
-<h1>Artworks & Collections</h1>
+<head>
+  <% @title = "Artworks" %>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <style>
+      body {
+          padding: 25px;
+          background-color: white;
+          color: black;
+          font-size: 25px;
+          background-image: url('https://en.chateauversailles.fr/sites/default/files/gg3.jpg');
+          background-repeat: no-repeat;
+          background-attachment: fixed;
+          background-size: 100% 100%;
+      }
+      .dark-mode {
+          background-color: black;
+          color: white;
+      }
+      .light-mode {
+          background-color: white;
+          color: black;
+      }
+      #text{
+          color: #FFFFFF;
+          white-space: nowrap;
+      }
+      ul{
+          columns: 3;
+          -webkit-columns: 3;
+          -moz-columns: 3;
+          list-style: none;
+      }
+      li {
+          -webkit-column-break-inside: avoid;
+          page-break-inside: avoid;
+          break-inside: avoid;
+      }
+      a{
 
-<h2>ArtWorks</h2>
-<ul>
-  <% @artworks.each do |artwork| %>
-    <li>
-      <%= link_to artwork.title, artwork %>
-    </li>
-  <% end %>
-</ul>
+      }
+      #frame{
+          position:relative;
+          padding:0;
+          margin:0;
+          border:solid 15px #555;
+          max-width:600px;
+          margin:40px auto;
+          box-shadow:-3px -3px 12px #999;
+      }
+      #border{
+          position:relative;
+          padding:0;
+          margin:0;
+          border:solid 70px white;
+          box-shadow:-3px -3px 12px #999;
+      }
+      img{
+          display:block;
+          padding:0;
+          margin:0;
+          width:100%;
+          height:auto;
+          border-top:solid 2px #aaa;
+          border-left:solid 2px #aaa;
+          border-bottom:solid 2px #ccc;
+          border-right:solid 2px #ccc;
+      }
+      #caption{
+          position: absolute;
+          bottom: -60px;
+          left: 50%;
+          transform: translate(-50%, 0);
+          padding: 5px;
+          max-width: 25ch;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          font-family: 'Brush Script MT', cursive;
+      }
+      body::-webkit-scrollbar {
+          width: 10px;
+      }
 
-<%= link_to "New Artwork", new_artwork_path %>
+      body::-webkit-scrollbar-track {
+          -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+      }
+
+      body::-webkit-scrollbar-thumb {
+          background-color: darkgrey;
+          outline: 1px solid slategrey;
+      }
+  </style>
+</head>
+<body class="dark-mode">
+
+<nav class="navbar navbar-inverse navbar-fixed-top">
+  <div>
+    <ul class="nav navbar-nav navbar-left">
+      <li><%= link_to "Collections", collections_path %></li>
+      <li class="active"><%= link_to "Artworks", artworks_path %></li>
+      <li><%= link_to "New Artwork", new_artwork_path %></li>
+    </ul>
+    <div>
+</nav>
+<br>
+<div id="text">
+<h1 style="text-align: center; font-size: 80; font-weight: bold;">Artworks</h1>
+
+  <ul>
+    <% @artworks.each do |artwork| %>
+
+      <li>
+        <div id="frame">
+          <div id="border">
+            <%= link_to image_tag(artwork.image_url), artwork %>
+            <p id="caption"><%= link_to artwork.title, artwork %></p>
+          </div><!-- #border -->
+        </div><!-- #frame -->
+
+      </li>
+    <% end %>
+  </ul>
+
+  <br>
+  <p style="text-align: center"><%= link_to "Add New Artwork", new_artwork_path %></p>
+</div>
+</body>

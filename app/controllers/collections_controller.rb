@@ -44,6 +44,6 @@ class CollectionsController < ApplicationController
 
   private
   def collection_params
-    params.require(:collection).permit(:title, :owner, :style, :location, { artwork_ids:[] })
+    params.require(:collection).permit(:title, :owner, :style, :location, :image, { artwork_ids:[] })
   end
 end

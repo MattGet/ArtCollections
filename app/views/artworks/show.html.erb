@@ -1,14 +1,111 @@
+<head>
+  <% @title = @artwork.title %>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <style>
+      body {
+          padding 25px;
+          background-color: white;
+          color: black;
+          font-size: 25px;
+      }
+      .dark-mode {
+          background-color: black;
+          color: white;
+      }
+      .light-mode {
+          background-color: white;
+          color: black;
+      }
+      #frame{
+          position:relative;
+          padding:0;
+          margin:0;
+          border:solid 15px #555;
+          max-width:600px;
+          margin:40px auto;
+          box-shadow:-3px -3px 12px #999;
+      }
+      #border{
+          position:relative;
+          padding:0;
+          margin:0;
+          border:solid 70px white;
+          box-shadow:-3px -3px 12px #999;
+      }
+      #caption{
+          position: absolute;
+          bottom: -60px;
+          left: 50%;
+          transform: translate(-50%, 0);
+          padding: 5px;
+          color: black;
+      }
+      img{
+          display:block;
+          padding:0;
+          margin:0;
+          width:100%;
+          height:auto;
+          border-top:solid 2px #aaa;
+          border-left:solid 2px #aaa;
+          border-bottom:solid 2px #ccc;
+          border-right:solid 2px #ccc;
+      }
+
+      body::-webkit-scrollbar {
+          width: 10px;
+      }
+
+      body::-webkit-scrollbar-track {
+          -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+      }
+
+      body::-webkit-scrollbar-thumb {
+          background-color: darkgrey;
+          outline: 1px solid slategrey;
+      }
+  </style>
+</head>
+<body class="dark-mode">
+<nav class="navbar navbar-inverse navbar-fixed-top">
+  <div>
+    <ul class="nav navbar-nav navbar-left">
+      <li><%= link_to "Collections", collections_path %></li>
+      <li class="active"><%= link_to "Artworks", artworks_path %></li>
+    </ul>
+    <div>
+</nav>
+<br>
+
 <h1><%= @artwork.title %></h1>
 
 <p>Author: <%= @artwork.author %></p>
 <p>Type: <%= @artwork.typeof %></p>
 <p>Date Created: <%= @artwork.date %></p>
-
+<p>Collections:</p>
 <ul>
-  <li><%= link_to "Home", root_path %></li>
+  <% @artwork.collections.each do |collection| %>
+    <li><%= link_to collection.title, collection_path(collection) %></li>
+  <% end %>
+</ul>
+<div id="frame">
+  <div id="border">
+    <%= image_tag @artwork.image_url, alt: "No Image Provided" if @artwork.image %>
+  </div><!-- #border -->
+</div><!-- #frame -->
+
+<br>
+<p>Options:</p>
+<ul>
   <li><%= link_to "Edit", edit_artwork_path(@artwork) %></li>
   <li><%= link_to "Destroy", artwork_path(@artwork), data: {
     turbo_method: :delete,
     turbo_confirm: "Are you sure?"
   } %></li>
 </ul>
+
+</body>

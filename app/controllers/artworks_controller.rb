@@ -44,6 +44,6 @@ class ArtworksController < ApplicationController
 
   private
   def artwork_params
-    params.require(:artwork).permit(:title, :author, :date, :typeof)
+    params.require(:artwork).permit(:title, :author, :date, :typeof, :image)
   end
 end
